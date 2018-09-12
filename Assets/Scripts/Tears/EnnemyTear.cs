@@ -21,5 +21,4 @@ public class EnnemyTear : MonoBehaviour {
 			other.gameObject.GetComponent<Controls>().TakeDamage(this.power);
 		}	
 	}
-
 }

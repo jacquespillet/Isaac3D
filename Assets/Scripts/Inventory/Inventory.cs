@@ -13,6 +13,17 @@ public class Inventory : MonoBehaviour {
 	public Text bombNumberText;
 	public Text keyNumberText;
 	public Text coinNumberText;
+    private static bool created = false;
+
+    void Awake()
+    {
+        if (!created)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            created = true;
+            Debug.Log("Awake: " + this.gameObject);
+        }
+    }
 
 	void Start()
 	{

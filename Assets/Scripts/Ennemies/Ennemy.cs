@@ -10,14 +10,12 @@ public abstract class Ennemy : MonoBehaviour {
 	protected bool isDead = false;
 	public bool touchDamage;
 	public float attackPower;
-
+	public Room room;
 	public GameObject bodyGO;
-	private Material damagedMat;
+	protected Material damagedMat;
 	// Use this for initialization
 
-	/// <summary>
-	/// Awake is called when the script instance is being loaded.
-	/// </summary>
+
 	void Awake()
 	{
 		this.damagedMat = (Material) Resources.Load("Materials/Damage");
@@ -30,7 +28,7 @@ public abstract class Ennemy : MonoBehaviour {
 	void OnCollisionEnter(Collision other)
 	{
 		if(other.gameObject.tag == "Tear") {
-			this.TakeDamage(1f);
+			this.TakeDamage(other.transform.GetComponent<PlayerTear>().power);
 		}
 		if(other.gameObject.tag == "Player" && this.touchDamage) {
 			other.gameObject.GetComponent<Controls>().TakeDamage(this.attackPower);
@@ -38,34 +36,39 @@ public abstract class Ennemy : MonoBehaviour {
 		this.collisionActions(other);	
 	}
 
-	public void TakeDamage(float damage) {
-			Material mainMat = this.bodyGO.GetComponent<MeshRenderer>().material;
-			 this.bodyGO.GetComponent<MeshRenderer>().material = this.damagedMat;
-			StartCoroutine(changeMaterial(mainMat, this.damagedMat, 0.1f));
+	virtual public void TakeDamage(float damage) {
+			StartCoroutine(changeMaterial(0.1f));
 			this.life -= damage;
 	}
 	
 
 	protected void checkIfDead() {
 		if(this.life <= 0) {
+			this.room.currentLevel.GetComponent<LevelSounds>().EnnemyDie();
 			this.preDieActions();
 			this.animator.SetTrigger("isDead");
 			this.isDead = true;
 			StartCoroutine(die());
+			this.postDieActions();
 		}
 	}
 
 	virtual protected void collisionActions(Collision other){}
 
 	virtual protected void preDieActions() {}
+	virtual protected void postDieActions() {}
 
 	virtual protected IEnumerator die() {
-		yield return new WaitForSeconds (1f);
+		burst();
+		yield return new WaitForSeconds (0f);
 		Destroy(this.gameObject);
 	}
 
-	private IEnumerator changeMaterial(Material mainMat, Material otherMat, float timer) {
-		this.bodyGO.GetComponent<MeshRenderer>().material = otherMat;
+	virtual protected void burst() {}
+
+	virtual protected IEnumerator changeMaterial(float timer) {
+		Material mainMat = this.bodyGO.GetComponent<MeshRenderer>().material;
+		this.bodyGO.GetComponent<MeshRenderer>().material = this.damagedMat;
 		yield return new WaitForSeconds(timer);
 		this.bodyGO.GetComponent<MeshRenderer>().material = mainMat;
 	}

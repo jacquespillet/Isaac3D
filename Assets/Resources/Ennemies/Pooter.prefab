@@ -55,9 +55,9 @@ GameObject:
   - component: {fileID: 4475737491565768}
   - component: {fileID: 65390796765447980}
   - component: {fileID: 54095271659141360}
-  - component: {fileID: 82179719970653092}
   - component: {fileID: 95421109373624994}
   - component: {fileID: 114408374654889176}
+  - component: {fileID: 82238421898202880}
   - component: {fileID: 114150765105832286}
   m_Layer: 11
   m_Name: Pooter
@@ -504,7 +504,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.4287816, y: 2.5392466, z: 1.1209414}
   m_Center: {x: -0.33534044, y: -0.13193512, z: -0.64318526}
---- !u!82 &82179719970653092
+--- !u!82 &82238421898202880
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -515,7 +515,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9ca8613d098eafc40b2787027d047f66, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.6
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -553,7 +553,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -616,6 +616,7 @@ MonoBehaviour:
   speed: 3
   touchDamage: 0
   attackPower: 0.5
+  room: {fileID: 0}
   bodyGO: {fileID: 1614651062651028}
 --- !u!114 &114408374654889176
 MonoBehaviour:
@@ -633,5 +634,6 @@ MonoBehaviour:
   shotSpeed: 15
   range: 0.3
   tears: []
-  tearType: {fileID: 1736164083118644, guid: c63ae7a7ecae28a4faf23a3a8cd40466, type: 2}
+  tearType: {fileID: 1736164083118644, guid: 77225414cffcb544a88ba3ecd157ac0e, type: 2}
   isPlayer: 0
+  tearPower: 1

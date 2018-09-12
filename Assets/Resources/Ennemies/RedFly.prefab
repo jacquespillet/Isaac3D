@@ -74,8 +74,8 @@ GameObject:
   - component: {fileID: 114968944948604224}
   - component: {fileID: 65646854595226662}
   - component: {fileID: 82011355903905388}
-  - component: {fileID: 82533695028859190}
   - component: {fileID: 95004080059834244}
+  - component: {fileID: 82832877644822640}
   m_Layer: 11
   m_Name: RedFly
   m_TagString: Ennemy
@@ -368,7 +368,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!82 &82533695028859190
+--- !u!82 &82832877644822640
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -480,5 +480,6 @@ MonoBehaviour:
   speed: 3
   touchDamage: 1
   attackPower: 0.5
+  room: {fileID: 0}
   bodyGO: {fileID: 1420785301058440}
   player: {fileID: 4049771763957528, guid: 3434f44813822404eaef2a1eb716464e, type: 2}

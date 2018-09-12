@@ -17,25 +17,45 @@ public class Controls : MonoBehaviour {
 
 	public Room currentRoom;
 
+	public MainMenu menu;
+
+	private bool isDead;
+	private bool isInMenu;
+	public GameObject inGameUI;
+
 	//For blue and black hearts
-	public List<SpecialHeart> additiveHearts;
-	void Start () {
+	public List<SpecialHeart> additiveHearts;    
+	
+	public bool created = false;
+
+    void Awake()
+    {
+		Debug.Log("CREATE");
+        
+		// DontDestroyOnLoad(this.gameObject);
+		this.isDead = false;
+		this.isInMenu = false;
 		this.additiveHearts = new List<SpecialHeart>();
 
 		this.currentLife = maxLife;
 		this.updateLifeUI();
 		Cursor.lockState = wantedMode;
+
+		menu.controls = this;
+
 		AudioSource[] audioSources = this.GetComponents<AudioSource>();
 		this.hurtSound = new AudioSource[] {
 			audioSources[1],
 			audioSources[2],
 			audioSources[3]
 		};
+    }
+
+	void Start () {
 	}
 
 	public void TakeDamage(float damage) {
 		if(!this.isRedScreen) {
-			
 			if(this.additiveHearts.Count == 0) {
 				this.currentLife -= damage;
 			} else {
@@ -50,13 +70,27 @@ public class Controls : MonoBehaviour {
 			}
 
 
-			int index = Random.Range(0, this.hurtSound.Length);
-			this.hurtSound[index].Play();
-			this.redScreen.SetActive(true);
-			this.isRedScreen = true;
-			StartCoroutine(unableObject(this.redScreen, 0.3f));
-			this.updateLifeUI();
+			if(this.currentLife <=0) {
+				this.die();				
+			} else {
+				int index = Random.Range(0, this.hurtSound.Length);
+				this.hurtSound[index].Play();
+				this.redScreen.SetActive(true);
+				this.isRedScreen = true;
+				this.updateLifeUI();
+				StartCoroutine(unableObject(this.redScreen, 0.3f));
+			}
 		}
+	}
+
+	private void die() {
+		this.updateLifeUI();
+		this.inGameUI.SetActive(false);
+		this.soundManager.dieSound.Play();
+		this.menu.gameObject.SetActive(true);
+		this.menu.isDead = true;
+		this.isDead = true;
+		this.currentRoom.ennemyContainer.SetActive(false);
 	}
 	
 
@@ -112,6 +146,7 @@ public class Controls : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(!this.isDead) {
 			float horizontaltranslation = Input.GetAxis("Horizontal");
 			float verticalTranslation =  Input.GetAxis("Vertical");
 			this.GetComponent<Rigidbody>().velocity = new Vector3(this.transform.forward.x* verticalTranslation * this.speed, this.GetComponent<Rigidbody>().velocity.y, this.transform.forward.z* verticalTranslation* this.speed);
@@ -130,6 +165,22 @@ public class Controls : MonoBehaviour {
 				this.transform.forward = new Vector3(this.transform.forward.x, -MAX_FORWARD_Y, this.transform.forward.z);
 
 			}
+
+			if(Input.GetKeyDown(KeyCode.Escape)) {
+				if(!isInMenu) {
+					this.menu.gameObject.SetActive(true);
+					this.inGameUI.SetActive(false);
+					Time.timeScale = 0;
+					isInMenu = true;
+				} else {
+					this.menu.gameObject.SetActive(false);
+					this.inGameUI.SetActive(true);
+					Time.timeScale = 1;
+					isInMenu = false;	
+					Cursor.lockState = wantedMode;				
+				}
+			}
+		}
 	}
 
 	

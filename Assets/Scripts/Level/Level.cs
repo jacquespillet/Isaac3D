@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour {
 	public List<Room> rooms;
@@ -12,6 +13,9 @@ public class Level : MonoBehaviour {
 	private int numSpecialRooms = 0; //Boss and Bonus
 	private FileParser fileParser;
 
+	public Room currentRoom;
+	public GameObject player;
+	public GameObject UIManager;
 	void Awake()
 	{
 		this.fileParser = new FileParser();
@@ -19,6 +23,27 @@ public class Level : MonoBehaviour {
 
 	void Start () {
 		InitLevel();
+	}
+
+	public void reloadLevel() {
+		DontDestroyOnLoad(player.gameObject);
+		player.gameObject.transform.position = new Vector3(0f, 5f, 0f);
+		DontDestroyOnLoad(UIManager);
+		SceneManager.LoadScene("newScene");
+		// foreach (var room in rooms) 
+		// {
+		// 	foreach(var wall in room.walls) {
+		// 		Destroy(wall.gameObject);
+		// 	}
+		// 	Destroy(room.gameObject);
+		// }
+		// this.numRooms = 0;
+		// this.roomsCreated = 0;
+		// this.numSpecialRooms = 0;
+		// this.rooms.Clear();
+
+		// this.player.transform.position = new Vector3(0f, 5f, 0f);
+		// InitLevel();
 	}
 
 	// Update is called once per frame

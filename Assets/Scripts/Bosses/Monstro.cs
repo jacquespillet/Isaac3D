@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monstro : Ennemy {
+public class Monstro : Boss {
 	private float elapsedTime=0f;
 	private GameObject tearPrefab;
+	private AudioSource[] audiosources;
 
 	// Use this for initialization
+
+	void Awake()
+	{
+		this.damagedMat = (Material) Resources.Load("Materials/Damage");
+	}
+
 	void Start () {
 		this.animator = this.GetComponent<Animator>();
-		this.tearPrefab = (GameObject) Resources.Load("Tears/Ennemies/Tear");
+		this.tearPrefab = (GameObject) Resources.Load("Tears/Ennemies/RedTear");
+		this.audiosources = this.GetComponents<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -30,9 +38,19 @@ public class Monstro : Ennemy {
 		}
 	}
 
+	protected override IEnumerator changeMaterial(float timer) { 
+		Material[] damagedMats = {this.damagedMat, this.damagedMat, this.damagedMat, this.damagedMat};
+		Material[] mainMats = this.bodyGO.GetComponent<SkinnedMeshRenderer>().materials;
+
+		this.bodyGO.GetComponent<SkinnedMeshRenderer>().materials = damagedMats;
+		yield return new WaitForSeconds(0.1f);
+		this.bodyGO.GetComponent<SkinnedMeshRenderer>().materials = mainMats;
+	}
+
 	private void jumpAttack(){
 		this.animator.Play("Jump");
 		this.GetComponent<Rigidbody>().velocity = new Vector3(0f, 60f, 0f) + this.transform.forward * 5f;
+		this.audiosources[1].Play();
 		StartCoroutine(comeBackIdle());
 	}
 
@@ -44,18 +62,17 @@ public class Monstro : Ennemy {
 			tear.GetComponent<Rigidbody>().velocity = this.transform.forward * 30f + new Vector3(Random.Range(-10, 10), Random.Range(15, 30), Random.Range(-10, 10));
 			StartCoroutine(disableTear(0.6f, tear));		
 		}
+		this.audiosources[0].Play();
 		StartCoroutine(comeBackIdle());
 	}
 
-	void OnCollisionEnter(Collision other)
-	{
-		if(other.gameObject.tag=="Player") {
-			other.gameObject.GetComponent<Controls>().TakeDamage(0.5f);
-		}		
-		if(other.gameObject.tag == "Tear") {
-			this.life -= 1f;
+
+	override protected void collisionActions(Collision other){
+		if(other.gameObject.tag == "Floor") {
+			this.audiosources[2].Play();
 		}
 	}
+
 
 	IEnumerator comeBackIdle() {
 		yield return new WaitForSeconds (1.5f);

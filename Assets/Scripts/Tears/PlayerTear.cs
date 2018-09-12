@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerTear : MonoBehaviour {
 	protected Rigidbody rigidBody;
+	public float power;
 
 	void Start () {
 		this.rigidBody = this.GetComponent<Rigidbody>();

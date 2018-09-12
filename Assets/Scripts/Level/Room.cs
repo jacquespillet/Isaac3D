@@ -9,7 +9,8 @@ public class Room : MonoBehaviour {
 	public Room[] neighbourRooms;
 	public Wall[] walls;
 	protected Level level;
-	
+	public Level currentLevel;
+
 	public string type;
 	private int index;
 	protected FileParser fileParser;
@@ -24,7 +25,7 @@ public class Room : MonoBehaviour {
 	public Material minimapMaterial;
 	private Material currentRoomMaterial;
 	public int roomId;
-	void Start () {
+	void Awake () {
 		this.fileParser = new FileParser();
 		this.currentRoomMaterial = (Material) Resources.Load("UI/Materials/CurrentRoom", typeof(Material));
 	}
@@ -77,16 +78,12 @@ public class Room : MonoBehaviour {
 
 	virtual public void initElements(GameObject player) {
 		this.updateMinimap();
+		this.level.currentRoom = this;
+		this.level.player = player;
+
 		player.GetComponent<Controls>().currentRoom = this;
 		if(!isInitialized && !isTerminated) {
-			// string path = Application.persistentDataPath + "/Rooms/" + this.level.type + "/" + this.type + "/numRooms";
-			// StreamReader reader = new StreamReader(path);
-			// int numRooms = Int32.Parse(reader.ReadLine());
-			// reader.Close();
-			// int roomId = UnityEngine.Random.Range(1, numRooms+1);
-			// // roomId = 4;
-			//Peut etre que lesz ennemis et les décors au tout début ? (plus sympa)
-			List<GameObject> elements = this.fileParser.parseEnnemies(this.level.type, this.type, roomId.ToString(), this.decorContainer.transform, this.ennemyContainer.transform, this.transform);
+			List<GameObject> elements = this.fileParser.parseEnnemies(this, this.level.type, this.type, roomId.ToString(), this.decorContainer.transform, this.ennemyContainer.transform, this.transform);
 			if(this.ennemyContainer.transform.childCount >0) {
 				this.closeDoors();
 			}
@@ -124,6 +121,7 @@ public class Room : MonoBehaviour {
 		this.neighbourRooms = new Room[4];
 		this.walls = new Wall[4];
 		this.level = level;
+		this.currentLevel = level;
 		this.index = index;
 	}
 

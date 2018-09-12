@@ -399,4 +399,5 @@ MonoBehaviour:
   speed: 3
   touchDamage: 0
   attackPower: 0.5
+  room: {fileID: 0}
   bodyGO: {fileID: 1420785301058440}

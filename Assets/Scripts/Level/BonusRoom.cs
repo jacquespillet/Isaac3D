@@ -8,7 +8,7 @@ public class BonusRoom : Room {
 
 	public override void initElements(GameObject player) {
 		if(!isInitialized && !isTerminated) {
-			List<GameObject> elements = this.fileParser.parseEnnemies(this.level.type, this.type, roomId.ToString(), this.decorContainer.transform, this.ennemyContainer.transform, this.transform);
+			List<GameObject> elements = this.fileParser.parseEnnemies(this, this.level.type, this.type, roomId.ToString(), this.decorContainer.transform, this.ennemyContainer.transform, this.transform);
 			this.initBonus();
 			isInitialized = true;
 			isTerminated = true;

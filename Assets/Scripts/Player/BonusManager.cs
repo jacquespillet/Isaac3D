@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BonusManager : MonoBehaviour {
 	public List<Bonus> bonuses;
-	
+
 	// Use this for initialization
 	void Start () {
 		this.bonuses = new List<Bonus>();

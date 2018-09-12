@@ -15,9 +15,13 @@ public class TearCaster : MonoBehaviour {
 	public GameObject tearType;
 	public bool isPlayer;
 
+	public float tearPower;
+
+
 	// Use this for initialization
 	void Start () {
 		tears = new List<GameObject> ();
+		this.tearPower = 1f;
 		// this.tearType = (GameObject) Resources.Load("Tears/Tear", typeof(GameObject));
 		AudioSource[] audioSources = this.GetComponents<AudioSource>();
 		this.tearCastSound = audioSources[0];
@@ -57,6 +61,11 @@ public class TearCaster : MonoBehaviour {
 	private void getTears() {
 		if(this.numShots == 1) {
 			GameObject tear = Instantiate (tearType,this.transform.position + transform.forward*2f  , Quaternion.Euler(Vector3.zero)) as GameObject;
+			if(tear.transform.GetComponent<PlayerTear>()) {
+				tear.GetComponent<PlayerTear>().power = this.tearPower;
+			} else if(tear.transform.GetComponent<EnnemyTear>()) {
+				tear.GetComponent<EnnemyTear>().power = this.tearPower;
+			}
 			tears.Add (tear);
 			tear.GetComponent<Rigidbody> ().velocity = transform.forward * shotSpeed;
 			StartCoroutine(disableTear (range, tear));
@@ -68,7 +77,11 @@ public class TearCaster : MonoBehaviour {
 					tearPosition, 
 					Quaternion.Euler(Vector3.zero)
 				) as GameObject;
-				
+				if(tear.transform.GetComponent<PlayerTear>()) {
+					tear.GetComponent<PlayerTear>().power = this.tearPower;
+				} else if(tear.transform.GetComponent<EnnemyTear>()) {
+					tear.GetComponent<EnnemyTear>().power = this.tearPower;
+				}
 				tears.Add (tear);
 				tear.GetComponent<Rigidbody> ().velocity = transform.forward * shotSpeed;
 				StartCoroutine(disableTear (range, tear));
@@ -81,6 +94,12 @@ public class TearCaster : MonoBehaviour {
 					tearPosition, 
 					Quaternion.Euler(Vector3.zero)
 				) as GameObject;
+				
+				if(tear.transform.GetComponent<PlayerTear>()) {
+					tear.GetComponent<PlayerTear>().power = this.tearPower;
+				} else if(tear.transform.GetComponent<EnnemyTear>()) {
+					tear.GetComponent<EnnemyTear>().power = this.tearPower;
+				}
 				tears.Add (tear);
 				tear.GetComponent<Rigidbody> ().velocity = (transform.forward + (transform.right * 0.2f) * i) * shotSpeed;
 				StartCoroutine(disableTear (range, tear));

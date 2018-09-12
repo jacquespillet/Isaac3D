@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour {
 
+    private static bool created = false;
+
+    void Awake()
+    {
+        // if (!created)
+        // {
+        //     DontDestroyOnLoad(this.gameObject);
+        //     created = true;
+        //     Debug.Log("Awake: " + this.gameObject);
+        // }
+    }
 	// Use this for initialization
 	void Start () {
 		

@@ -74,8 +74,8 @@ GameObject:
   - component: {fileID: 54607304772378270}
   - component: {fileID: 65646854595226662}
   - component: {fileID: 82011355903905388}
-  - component: {fileID: 82533695028859190}
   - component: {fileID: 95004080059834244}
+  - component: {fileID: 82007849602666836}
   m_Layer: 11
   m_Name: RingFly
   m_TagString: Ennemy
@@ -288,7 +288,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000012, y: 2.3066719, z: 2.0000005}
   m_Center: {x: 0.00000059604645, y: -0.05117456, z: 0.0000009934107}
---- !u!82 &82011355903905388
+--- !u!82 &82007849602666836
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -297,11 +297,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9ca8613d098eafc40b2787027d047f66, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.787
+  m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -368,7 +368,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!82 &82533695028859190
+--- !u!82 &82011355903905388
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -377,11 +377,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 9ca8613d098eafc40b2787027d047f66, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.787
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -480,5 +480,6 @@ MonoBehaviour:
   speed: 3
   touchDamage: 1
   attackPower: 0.5
+  room: {fileID: 0}
   bodyGO: {fileID: 1420785301058440}
   player: {fileID: 0}
