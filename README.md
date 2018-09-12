@@ -8,7 +8,8 @@ That is why I decided to create a 3D prototype of this game.
 
 This project is still on progress,  I think I already have created the most important bricks of the game architecture : 
 
-Random level generation
-Bonus items mechanics 
-Ennemies mechanics
+* Random level generation
+* Bonus items mechanics 
+* Ennemies mechanics
+
 Now I have to script ennemies, bonus items, bosses, and I also have to model more 3D models of the game (Ennemies, bosses, rooms...)
